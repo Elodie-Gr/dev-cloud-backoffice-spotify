@@ -1,25 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+// Utilisation dans votre composant principal
+import React from 'react';
+import TabBar from './components/TabBar';
+import StyledButton from './components/Button';
+import PrimarySearchAppBar from './components/Search';
 
-function App() {
+const MyComponent = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <PrimarySearchAppBar />
+      <TabBar />
+      <StyledButton>Ecouter sur Spotify</StyledButton>
     </div>
   );
-}
+};
 
-export default App;
+export default MyComponent;
