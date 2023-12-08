@@ -1,6 +1,6 @@
-// AlbumsTab.js
 import React from 'react';
-import {ItemsList} from '../ItemsList';
+import {DragDropContext} from 'react-beautiful-dnd';
+import {DraggableItemsList} from '../DraggableItemsList ';
 
 const itemsData = [
   {
@@ -24,11 +24,25 @@ const itemsData = [
 ];
 
 const AlbumsTab = () => {
+  const [albums, setAlbums] = React.useState(itemsData);
+  const handleDragEnd = result => {
+    if (!result.destination) {
+      return; // L'élément n'a pas été déplacé vers une nouvelle position
+    }
+
+    const newAlbums = Array.from(albums);
+    const [movedAlbum] = newAlbums.splice(result.source.index, 1);
+    newAlbums.splice(result.destination.index, 0, movedAlbum);
+
+    setAlbums(newAlbums);
+  };
+
   return (
     <div>
-      {/* Contenu pour l'onglet Musiques */}
       <h2>Albums</h2>
-      <ItemsList items={itemsData} />
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <DraggableItemsList items={albums} />
+      </DragDropContext>
     </div>
   );
 };

@@ -1,7 +1,5 @@
 import * as React from 'react';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
@@ -22,13 +20,12 @@ const CoverImage = styled('div')({
   },
 });
 
-// Item component
 export const Item = ({artist, songTitle, albumTitle, imageSrc}) => (
   <ListItem
     alignItems="flex-start"
     secondaryAction={
       <React.Fragment>
-        <IconButton edge="end" aria-label="create">
+        <IconButton edge="end" aria-label="create" style={{margin: 2}}>
           <CreateIcon />
         </IconButton>
         <IconButton edge="end" aria-label="delete">

@@ -6,7 +6,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import MusicsTab from './tabs/MusicsTab';
+//import MusicsTab from './tabs/MusicsTab';
+import LazyLoadedMusicsTab from './tabs/MusicsTab';
 import ArtistsTab from './tabs/ArtistsTab';
 import AlbumsTab from './tabs/AlbumsTab';
 import StatisticsTab from './tabs/StatisticsTab';
@@ -57,7 +58,15 @@ export default function TabBar() {
   };
 
   return (
-    <Box sx={{bgcolor: 'background.paper', width: 500}}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center', // Center horizontally
+        width: '100%', // Take full width
+        margin: 'auto', // Center horizontally
+        bgcolor: 'background.paper',
+      }}>
       <AppBar position="static">
         <Tabs
           value={value}
@@ -77,7 +86,7 @@ export default function TabBar() {
         index={value}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <MusicsTab />
+          <LazyLoadedMusicsTab />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <ArtistsTab />
