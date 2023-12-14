@@ -6,8 +6,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-//import MusicsTab from './tabs/MusicsTab';
-import LazyLoadedMusicsTab from './tabs/MusicsTab';
+import MusicsTab from './tabs/MusicsTab';
+//import LazyLoadedMusicsTab from './tabs/MusicsTab';
 import ArtistsTab from './tabs/ArtistsTab';
 import AlbumsTab from './tabs/AlbumsTab';
 import StatisticsTab from './tabs/StatisticsTab';
@@ -86,7 +86,8 @@ export default function TabBar() {
         index={value}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <LazyLoadedMusicsTab />
+          {/* <LazyLoadedMusicsTab /> */}
+          <MusicsTab />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <ArtistsTab />

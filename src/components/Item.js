@@ -17,6 +17,9 @@ const CoverImage = styled('div')({
   backgroundColor: 'rgba(0,0,0,0.08)',
   '& > img': {
     width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderRadius: 8,
   },
 });
 

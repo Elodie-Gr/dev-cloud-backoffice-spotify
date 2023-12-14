@@ -1,5 +1,5 @@
 // ArtistsTab.js
-import React from 'react';
+import React, {useState} from 'react';
 import {ItemsList} from '../ItemsList';
 
 const itemsData = [
@@ -24,11 +24,17 @@ const itemsData = [
 ];
 
 const ArtistsTab = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
   return (
     <div>
       {/* Contenu pour l'onglet Musiques */}
       <h2>Artistes</h2>
-      <ItemsList items={itemsData} />
+      <ItemsList
+        items={itemsData}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+      />
     </div>
   );
 };

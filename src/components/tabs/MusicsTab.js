@@ -1,5 +1,5 @@
 // MusicsTab.js
-import React, {lazy} from 'react';
+import React /* {lazy} */, {useState} from 'react';
 import {ItemsList} from '../ItemsList';
 import Dropzone from '../Dropzone';
 import {generateMusic} from '../../utils/generateSong';
@@ -10,7 +10,7 @@ const itemsData = Array.from({length: numberOfMusics}, (_, index) =>
   generateMusic(index),
 );
 
-const loadItemsDataAsync = () => {
+/* const loadItemsDataAsync = () => {
   return new Promise(resolve => {
     setTimeout(() => {
       const numberOfMusics = 1000;
@@ -20,15 +20,18 @@ const loadItemsDataAsync = () => {
       resolve(itemsData);
     }, 1000); // ajustez le délai selon vos besoins
   });
-};
+}; */
 
-const LazyLoadedMusicsTab = lazy(() =>
+/* const LazyLoadedMusicsTab = lazy(() =>
   loadItemsDataAsync().then(data => ({
     default: () => <MusicsTab itemsData={data} />,
   })),
-);
+); */
 
 const MusicsTab = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
   const handleDrop = acceptedFiles => {
     // Logique de gestion des fichiers ici
     console.log('Fichiers acceptés :', acceptedFiles);
@@ -38,7 +41,11 @@ const MusicsTab = () => {
     <div>
       {/* Contenu pour l'onglet Musiques */}
       <h2>Musiques</h2>
-      <ItemsList items={itemsData} />
+      <ItemsList
+        items={itemsData}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+      />
       <div className="App">
         <h1>Glisser et déposer pour télécharger</h1>
         <Dropzone onDrop={handleDrop} />

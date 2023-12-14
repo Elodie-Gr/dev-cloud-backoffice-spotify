@@ -28,13 +28,17 @@ export const DraggableItem = ({
   imageSrc,
   index,
 }) => (
-  <Draggable draggableId={albumTitle} index={index}>
+  <Draggable
+    draggableId={albumTitle}
+    index={index}
+    style={{backgroundColor: 'red'}}>
     {provided => (
       <ListItem
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
         alignItems="flex-start"
+        style={{backgroundColor: 'pink', padding: '10px'}}
         secondaryAction={
           <React.Fragment>
             <IconButton edge="end" aria-label="create" style={{margin: 2}}>
