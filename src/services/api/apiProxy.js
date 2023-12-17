@@ -2,7 +2,6 @@
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const handleResponse = async response => {
-  console.log('Cookies:', document.cookie);
   if (!response.ok) {
     const error = await response.json();
     console.error('API Error:', error);

@@ -4,15 +4,17 @@ import Typography from '@mui/material/Typography';
 import {useNavigate} from 'react-router-dom';
 
 const Logout = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    document.cookie =
+      'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     const logoutDelay = setTimeout(() => {
-      history.push('/login');
+      navigate('/login');
     }, 2000);
 
     return () => clearTimeout(logoutDelay);
-  }, [history]);
+  }, [navigate]);
 
   return (
     <div>

@@ -1,12 +1,11 @@
 import * as React from 'react';
+import {useNavigate} from 'react-router-dom';
 import {styled, alpha} from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import StyledButton from './Button';
 
@@ -50,40 +49,11 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
-  const isMenuOpen = Boolean(anchorEl);
-
-  const [isLoggedIn, setLoggedIn] = React.useState(false);
-
-  const handleLogin = () => {
-    setLoggedIn(!isLoggedIn);
+  const handleLogout = () => {
+    navigate('/logout');
   };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
 
   return (
     <Box sx={{flexGrow: 1}}>
@@ -108,19 +78,12 @@ export default function PrimarySearchAppBar() {
           <Box sx={{flexGrow: 1}} />
 
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-            {isLoggedIn ? (
-              <StyledButton color="inherit" onClick={handleLogin}>
-                Se déconnecter
-              </StyledButton>
-            ) : (
-              <StyledButton color="inherit" onClick={handleLogin}>
-                Se connecter
-              </StyledButton>
-            )}
+            <StyledButton color="inherit" onClick={handleLogout}>
+              Se déconnecter
+            </StyledButton>
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMenu}
     </Box>
   );
 }

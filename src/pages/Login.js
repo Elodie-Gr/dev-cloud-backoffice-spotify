@@ -1,5 +1,5 @@
 // pages/Login.js
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -40,14 +40,6 @@ const Login = () => {
       const response = await login(credentials);
 
       if (response.token) {
-        const isAuthTokenPresent = () => {
-          const authTokenCookie = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('authToken='));
-          return authTokenCookie !== undefined;
-        };
-        const tokenPresent = isAuthTokenPresent();
-        console.log('Is authToken present:', tokenPresent);
         navigate('/');
       } else {
         setLoginError('Invalid email or password');
@@ -57,6 +49,19 @@ const Login = () => {
       setLoginError('An error occurred during login', error.message);
     }
   };
+
+  useEffect(() => {
+    const isAuthTokenPresent = () => {
+      const authTokenCookie = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('authToken='));
+      return authTokenCookie !== undefined;
+    };
+    const tokenPresent = isAuthTokenPresent();
+    if (tokenPresent) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
