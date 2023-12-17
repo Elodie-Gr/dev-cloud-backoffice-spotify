@@ -83,7 +83,7 @@ export default function TabBar() {
       </AppBar>
       <TabContext
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
+        index={value || 0}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
           {/* <LazyLoadedMusicsTab /> */}

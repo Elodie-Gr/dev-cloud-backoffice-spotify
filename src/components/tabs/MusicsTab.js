@@ -46,7 +46,7 @@ const MusicsTab = () => {
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
       />
-      <div className="App">
+      <div>
         <h1>Glisser et déposer pour télécharger</h1>
         <Dropzone onDrop={handleDrop} />
       </div>

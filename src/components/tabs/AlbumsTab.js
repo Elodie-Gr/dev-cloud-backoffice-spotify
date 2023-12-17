@@ -1,6 +1,7 @@
 import React from 'react';
 import {DragDropContext} from 'react-beautiful-dnd';
 import {DraggableItemsList} from '../DraggableItemsList ';
+import AlbumCover from '../AlbumCover';
 
 const itemsData = [
   {
@@ -40,6 +41,7 @@ const AlbumsTab = () => {
   return (
     <div>
       <h2>Albums</h2>
+      <AlbumCover albumId={'657f837b4aa6dff02f15eef6'} />
       <DragDropContext onDragEnd={handleDragEnd}>
         <DraggableItemsList items={albums} />
       </DragDropContext>
