@@ -5,10 +5,35 @@ import Dropzone from '../Dropzone';
 import {importFile} from '../../services/api/importApi';
 import {fetchSongs} from '../../services/api/songApi';
 
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const MusicsTab = () => {
   const [songs, setSongs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [openDropzoneModal, setOpenDropzoneModal] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [uploadError, setUploadError] = useState(false);
 
   useEffect(() => {
     // Fetch songs when the component mounts
@@ -17,38 +42,85 @@ const MusicsTab = () => {
         const songsData = await fetchSongs();
         setSongs(songsData);
       } catch (error) {
-        // Handle error, show error message, etc.
+        console.error('Error fetching songs:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [songs]);
 
   const handleDrop = async acceptedFiles => {
     try {
-      // Logique de gestion des fichiers ici
       console.log('Fichiers acceptés :', acceptedFiles);
       const file = acceptedFiles[0];
       const response = await importFile(file);
+      setOpenDropzoneModal(false);
+      setUploadSuccess(true);
       console.log(response); // ADD AN ALERT
     } catch (error) {
+      setOpenDropzoneModal(false);
+      setUploadError(true);
       console.error('Error importing file:', error);
-      // Handle error, show error message, etc.
     }
+  };
+
+  const handleOpenDropzoneModal = () => {
+    setOpenDropzoneModal(true);
+  };
+
+  const handleCloseDropzoneModal = () => {
+    setOpenDropzoneModal(false);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setUploadSuccess(false);
+    setUploadError(false);
   };
 
   return (
     <div>
       <h2>Musiques</h2>
+      <div>
+        <Button onClick={handleOpenDropzoneModal}>Open Dropzone Modal</Button>
+        <Modal
+          open={openDropzoneModal}
+          onClose={handleCloseDropzoneModal}
+          aria-labelledby="dropzone-modal-title"
+          aria-describedby="dropzone-modal-description">
+          <Box sx={style}>
+            <Dropzone onDrop={handleDrop} />
+          </Box>
+        </Modal>
+      </div>
+
       <ItemsList
         items={songs}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
       />
-      <div>
-        <h1>Glisser et déposer pour télécharger</h1>
-        <Dropzone onDrop={handleDrop} />
-      </div>
+
+      <Snackbar
+        open={uploadSuccess}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}>
+        <Alert
+          onClose={handleAlertClose}
+          severity="success"
+          sx={{width: '100%'}}>
+          File uploaded successfully!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={uploadError}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}>
+        <Alert onClose={handleAlertClose} severity="error" sx={{width: '100%'}}>
+          Error uploading file.
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
