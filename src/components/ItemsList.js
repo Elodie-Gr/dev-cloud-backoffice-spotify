@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import Pagination from '@mui/material/Pagination';
 import {Item} from './Item.js';
 
-export const ItemsList = ({items, currentPage, itemsPerPage}) => {
+export const ItemsList = ({items, currentPage, onPageChange, itemsPerPage}) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedItems = items.slice(startIndex, endIndex);
@@ -25,7 +25,7 @@ export const ItemsList = ({items, currentPage, itemsPerPage}) => {
       <Pagination
         count={Math.ceil(items.length / itemsPerPage)}
         page={currentPage}
-        onChange={(event, value) => {}}
+        onChange={(event, value) => onPageChange(value)}
       />
     </>
   );

@@ -80,6 +80,10 @@ const MusicsTab = () => {
     setUploadError(false);
   };
 
+  const handlePageChange = page => {
+    setCurrentPage(page);
+  };
+
   return (
     <div>
       <h2>Musiques</h2>
@@ -100,6 +104,7 @@ const MusicsTab = () => {
         items={songs}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
+        onPageChange={handlePageChange}
       />
 
       <Snackbar
