@@ -1,8 +1,9 @@
 // MusicsTab.js
-import React /* {lazy} */, {useState} from 'react';
+import React, {useState} from 'react';
 import {ItemsList} from '../ItemsList';
 import Dropzone from '../Dropzone';
 import {generateMusic} from '../../utils/generateSong';
+import {importFile} from '../../services/api/importApi';
 
 // Générer 1000 musiques
 const numberOfMusics = 5000;
@@ -10,31 +11,21 @@ const itemsData = Array.from({length: numberOfMusics}, (_, index) =>
   generateMusic(index),
 );
 
-/* const loadItemsDataAsync = () => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const numberOfMusics = 1000;
-      const itemsData = Array.from({length: numberOfMusics}, (_, index) =>
-        generateMusic(index),
-      );
-      resolve(itemsData);
-    }, 1000); // ajustez le délai selon vos besoins
-  });
-}; */
-
-/* const LazyLoadedMusicsTab = lazy(() =>
-  loadItemsDataAsync().then(data => ({
-    default: () => <MusicsTab itemsData={data} />,
-  })),
-); */
-
 const MusicsTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const handleDrop = acceptedFiles => {
-    // Logique de gestion des fichiers ici
-    console.log('Fichiers acceptés :', acceptedFiles);
+  const handleDrop = async acceptedFiles => {
+    try {
+      // Logique de gestion des fichiers ici
+      console.log('Fichiers acceptés :', acceptedFiles);
+      const file = acceptedFiles[0];
+      const response = await importFile(file);
+      console.log(response); //ADD AN ALERT
+    } catch (error) {
+      console.error('Error importing file:', error);
+      // Handle error, show error message, etc.
+    }
   };
 
   return (

@@ -11,13 +11,20 @@ const handleResponse = async response => {
 };
 
 export const get = url => fetch(BASE_URL + url).then(handleResponse);
-export const post = (url, data, options = {}) =>
-  fetch(BASE_URL + url, {
+export const post = (url, data, options = {}) => {
+  const authTokenCookie = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('authToken='));
+  const authToken = authTokenCookie ? authTokenCookie.split('=')[1] : null;
+
+  return fetch(BASE_URL + url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: authToken ? authToken : '',
     },
     body: JSON.stringify(data),
     credentials: 'include',
     ...options,
   }).then(handleResponse);
+};
