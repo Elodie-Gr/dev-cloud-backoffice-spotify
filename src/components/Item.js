@@ -1,3 +1,4 @@
+//Item.js
 import * as React from 'react';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
@@ -7,7 +8,8 @@ import Typography from '@mui/material/Typography';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
-const CoverImage = styled('div')({
+// Update the CoverImage component
+const CoverImage = styled('img')({
   width: 100,
   height: 100,
   objectFit: 'cover',
@@ -15,15 +17,10 @@ const CoverImage = styled('div')({
   flexShrink: 0,
   borderRadius: 8,
   backgroundColor: 'rgba(0,0,0,0.08)',
-  '& > img': {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    borderRadius: 8,
-  },
+  backgroundSize: 'cover',
 });
 
-export const Item = ({artist, songTitle, albumTitle, imageSrc}) => (
+export const Item = ({artistName, title, albumTitle, albumCover, album}) => (
   <ListItem
     alignItems="flex-start"
     secondaryAction={
@@ -37,15 +34,13 @@ export const Item = ({artist, songTitle, albumTitle, imageSrc}) => (
       </React.Fragment>
     }>
     <Box sx={{display: 'flex', alignItems: 'center'}}>
-      <CoverImage>
-        <img alt="Song Title" src={imageSrc} />
-      </CoverImage>
+      <CoverImage src={`data:image/png;base64, ${albumCover}`} />
       <Box sx={{ml: 1.5, minWidth: 0}}>
         <Typography variant="caption" color="text.secondary" fontWeight={500}>
-          {artist}
+          {artistName}
         </Typography>
         <Typography noWrap>
-          <b>{songTitle}</b>
+          <b>{title}</b>
         </Typography>
         <Typography noWrap letterSpacing={-0.25}>
           {albumTitle}
