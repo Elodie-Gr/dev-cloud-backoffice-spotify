@@ -18,7 +18,7 @@ export const importFile = async file => {
     const authToken = authTokenCookie ? authTokenCookie.split('=')[1] : null;
 
     const response = await axios.post(
-      'http://localhost:5000/api/v1/song',
+      'http://localhost:4000/api/v1/song',
       formData,
       {
         headers: {

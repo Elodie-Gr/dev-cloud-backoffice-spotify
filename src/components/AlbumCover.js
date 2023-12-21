@@ -5,7 +5,7 @@ const AlbumCover = ({albumId}) => {
 
   useEffect(() => {
     // Make a request to your backend to fetch the album cover data
-    fetch(`http://localhost:5000/api/v1/album/cover/${albumId}`)
+    fetch(`http://localhost:4000/api/v1/album/cover/${albumId}`)
       .then(response => response.text())
       .then(data => setAlbumCover(data))
       .catch(error => console.error('Error fetching album cover:', error));
