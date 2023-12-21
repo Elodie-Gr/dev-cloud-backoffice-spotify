@@ -11,8 +11,9 @@ export const ItemsList = ({items, currentPage, onPageChange, itemsPerPage}) => {
   const displayedItems = items.slice(startIndex, endIndex);
 
   return (
-    <>
-      <List sx={{width: '100%', maxWidth: 600, bgcolor: 'background.paper'}}>
+    <div
+      style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <List sx={{width: '100%', minWidth: 800, bgcolor: 'background.paper'}}>
         {displayedItems.map((item, index) => (
           <React.Fragment key={index}>
             <Item {...item} />
@@ -26,7 +27,8 @@ export const ItemsList = ({items, currentPage, onPageChange, itemsPerPage}) => {
         count={Math.ceil(items.length / itemsPerPage)}
         page={currentPage}
         onChange={(event, value) => onPageChange(value)}
+        style={{marginTop: '16px'}}
       />
-    </>
+    </div>
   );
 };

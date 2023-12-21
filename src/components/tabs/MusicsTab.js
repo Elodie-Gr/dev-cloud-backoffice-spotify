@@ -41,13 +41,14 @@ const MusicsTab = () => {
       try {
         const songsData = await fetchSongs();
         setSongs(songsData);
+        console.log(songsData);
       } catch (error) {
         console.error('Error fetching songs:', error);
       }
     };
 
     fetchData();
-  }, [songs]);
+  }, [uploadSuccess]);
 
   const handleDrop = async acceptedFiles => {
     try {
@@ -88,7 +89,7 @@ const MusicsTab = () => {
     <div>
       <h2>Musiques</h2>
       <div>
-        <Button onClick={handleOpenDropzoneModal}>Open Dropzone Modal</Button>
+        <Button onClick={handleOpenDropzoneModal}>IMPORT</Button>
         <Modal
           open={openDropzoneModal}
           onClose={handleCloseDropzoneModal}

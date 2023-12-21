@@ -31,9 +31,7 @@ const Dropzone = ({onDrop}) => {
     <StyledDropzone {...getRootProps()} elevation={3}>
       <input {...getInputProps()} />
       <Icon />
-      <p>
-        Faites glisser un fichier ici ou cliquez pour sélectionner un fichier
-      </p>
+      <p>Drop a file here or click in order to select a file</p>
     </StyledDropzone>
   );
 };
