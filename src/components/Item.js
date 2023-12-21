@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 export const Item = ({artistName, title, albumTitle, albumCover, album}) => {
-  const coverUrl = `http://localhost:5000/${albumCover}`;
+  const coverUrl = `http://localhost:4000/${albumCover}`;
   return (
     <ListItem
       alignItems="flex-start"
