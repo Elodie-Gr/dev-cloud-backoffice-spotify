@@ -33,17 +33,18 @@ export const DraggableItem = ({
 }) => {
   const coverUrl = `${COVER_IMAGE_URL}/${albumCover}`;
   return (
-    <Draggable
-      draggableId={title}
-      index={index}
-      style={{backgroundColor: 'red'}}>
-      {provided => (
+    <Draggable draggableId={title} index={index}>
+      {(provided, snapshot) => (
         <ListItem
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           alignItems="flex-start"
-          style={{backgroundColor: 'pink', padding: '10px'}}
+          style={{
+            ...provided.draggableProps.style, // Use the provided styles
+            backgroundColor: snapshot.isDragging ? 'lightgreen' : 'pink', // Adjust background color based on dragging state
+            padding: '10px',
+          }}
           secondaryAction={
             <React.Fragment>
               <IconButton edge="end" aria-label="create" style={{margin: 2}}>
