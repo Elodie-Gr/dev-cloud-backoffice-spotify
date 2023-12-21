@@ -1,6 +1,6 @@
 // MusicsTab.js
 import React, {useState, useEffect} from 'react';
-import {ItemsList} from '../ItemsList';
+import {ItemsList} from '../SongsList';
 import Dropzone from '../Dropzone';
 import {importFile} from '../../services/api/importApi';
 import {fetchSongs} from '../../services/api/songApi';
@@ -85,6 +85,15 @@ const MusicsTab = () => {
     setCurrentPage(page);
   };
 
+  const handleDelete = async () => {
+    try {
+      const updatedSongs = await fetchSongs();
+      setSongs(updatedSongs);
+    } catch (error) {
+      console.error('Error fetching updated songs:', error);
+    }
+  };
+
   return (
     <div>
       <h2>Musiques</h2>
@@ -106,6 +115,7 @@ const MusicsTab = () => {
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
+        onDelete={handleDelete}
       />
 
       <Snackbar

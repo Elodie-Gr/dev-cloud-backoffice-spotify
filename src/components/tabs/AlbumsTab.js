@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {DragDropContext} from 'react-beautiful-dnd';
-import {DraggableItemsList} from '../DraggableItemsList ';
+import {DraggableItemsList} from '../DraggableAlbumList ';
 import {fetchAlbums} from '../../services/api/albumApi';
 
 const AlbumsTab = () => {
@@ -17,6 +17,10 @@ const AlbumsTab = () => {
     newAlbums.splice(result.destination.index, 0, movedAlbum);
 
     setAlbums(newAlbums);
+  };
+
+  const handlePageChange = page => {
+    setCurrentPage(page);
   };
 
   useEffect(() => {
@@ -41,7 +45,7 @@ const AlbumsTab = () => {
         <DraggableItemsList
           items={albums}
           currentPage={currentPage}
-          onPageChange={setCurrentPage}
+          onPageChange={handlePageChange}
           itemsPerPage={itemsPerPage}
         />
       </DragDropContext>

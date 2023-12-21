@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Droppable} from 'react-beautiful-dnd';
 import List from '@mui/material/List';
-import {DraggableItem} from './DraggableItem';
+import {DraggableItem} from './DraggableAlbum';
 import Pagination from '@mui/material/Pagination';
 
 export const DraggableItemsList = ({

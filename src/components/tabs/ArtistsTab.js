@@ -1,39 +1,40 @@
 // ArtistsTab.js
-import React, {useState} from 'react';
-import {ItemsList} from '../ItemsList';
-
-const itemsData = [
-  {
-    artist: 'Artist 1',
-    songTitle: 'Song Title 1',
-    albumTitle: 'Album Title 1',
-    imageSrc: 'album-cover1.jpg',
-  },
-  {
-    artist: 'Artist 2',
-    songTitle: 'Song Title 2',
-    albumTitle: 'Album Title 2',
-    imageSrc: 'album-cover2.jpg',
-  },
-  {
-    artist: 'Artist 3',
-    songTitle: 'Song Title 3',
-    albumTitle: 'Album Title 3',
-    imageSrc: 'album-cover3.jpg',
-  },
-];
+import React, {useState, useEffect} from 'react';
+import {ItemsList} from '../ArtistsList';
+import {fetchArtists} from '../../services/api/artistApi';
 
 const ArtistsTab = () => {
+  const [artists, setArtists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+
+  useEffect(() => {
+    // Fetch songs when the component mounts
+    const fetchData = async () => {
+      try {
+        const artists = await fetchArtists();
+        setArtists(artists);
+        console.log(artists);
+      } catch (error) {
+        console.error('Error fetching artists:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handlePageChange = page => {
+    setCurrentPage(page);
+  };
+
   return (
     <div>
-      {/* Contenu pour l'onglet Musiques */}
       <h2>Artistes</h2>
       <ItemsList
-        items={itemsData}
+        items={artists}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
+        onPageChange={handlePageChange}
       />
     </div>
   );

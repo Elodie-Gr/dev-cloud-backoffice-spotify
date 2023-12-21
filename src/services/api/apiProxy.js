@@ -1,7 +1,7 @@
 // services/api/apiProxy.js
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+export const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-const handleResponse = async response => {
+export const handleResponse = async response => {
   if (!response.ok) {
     const error = await response.json();
     console.error('API Error:', error);

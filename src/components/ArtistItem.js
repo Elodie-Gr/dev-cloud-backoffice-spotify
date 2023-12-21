@@ -7,10 +7,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-const COVER_IMAGE_URL = process.env.REACT_APP_COVER_IMAGE_URL;
-
-export const Item = ({artistName, title, albumTitle, albumCover, album}) => {
-  const coverUrl = `${COVER_IMAGE_URL}/${albumCover}`;
+export const Item = ({name, albums, songs}) => {
   return (
     <ListItem
       alignItems="flex-start"
@@ -24,22 +21,19 @@ export const Item = ({artistName, title, albumTitle, albumCover, album}) => {
           </IconButton>
         </React.Fragment>
       }>
-      <img
-        src={coverUrl}
-        alt={`${artistName} - ${title}`}
-        style={{width: 64, height: 64, marginRight: 16}}
-      />
       <Box sx={{display: 'flex', alignItems: 'center'}}>
         <Box sx={{ml: 1.5, minWidth: 0}}>
           <Typography variant="caption" color="text.secondary" fontWeight={500}>
-            {artistName}
+            {name}
           </Typography>
-          <Typography noWrap>
-            <b>{title}</b>
+          <Typography>
+            <b>Albums:</b>
           </Typography>
-          <Typography noWrap letterSpacing={-0.25}>
-            {albumTitle}
-          </Typography>
+          <ul>
+            {albums.map(album => (
+              <li key={album._id}>{album.title}</li>
+            ))}
+          </ul>
         </Box>
       </Box>
     </ListItem>
