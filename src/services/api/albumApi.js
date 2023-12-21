@@ -20,13 +20,3 @@ export const fetchAlbumById = async albumId => {
     throw error;
   }
 };
-
-export const fetchAlbumCoverById = async albumId => {
-  try {
-    const response = await get(`/album/cover/${albumId}`);
-    return response;
-  } catch (error) {
-    console.error(`Error fetching album with ID ${albumId}:`, error);
-    throw error;
-  }
-};

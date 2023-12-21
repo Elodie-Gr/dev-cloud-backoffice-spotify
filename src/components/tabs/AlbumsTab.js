@@ -1,31 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {DragDropContext} from 'react-beautiful-dnd';
 import {DraggableItemsList} from '../DraggableItemsList ';
-import AlbumCover from '../AlbumCover';
-
-const itemsData = [
-  {
-    artist: 'Artist 1',
-    songTitle: 'Song Title 1',
-    albumTitle: 'Album Title 1',
-    imageSrc: 'album-cover1.jpg',
-  },
-  {
-    artist: 'Artist 2',
-    songTitle: 'Song Title 2',
-    albumTitle: 'Album Title 2',
-    imageSrc: 'album-cover2.jpg',
-  },
-  {
-    artist: 'Artist 3',
-    songTitle: 'Song Title 3',
-    albumTitle: 'Album Title 3',
-    imageSrc: 'album-cover3.jpg',
-  },
-];
+import {fetchAlbums} from '../../services/api/albumApi';
 
 const AlbumsTab = () => {
-  const [albums, setAlbums] = React.useState(itemsData);
+  const [albums, setAlbums] = React.useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
   const handleDragEnd = result => {
     if (!result.destination) {
       return; // L'élément n'a pas été déplacé vers une nouvelle position
@@ -38,12 +19,31 @@ const AlbumsTab = () => {
     setAlbums(newAlbums);
   };
 
+  useEffect(() => {
+    // Fetch songs when the component mounts
+    const fetchData = async () => {
+      try {
+        const albumsData = await fetchAlbums();
+        setAlbums(albumsData);
+        console.log(albumsData);
+      } catch (error) {
+        console.error('Error fetching songs:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
       <h2>Albums</h2>
-      <AlbumCover albumId={'657f837b4aa6dff02f15eef6'} />
       <DragDropContext onDragEnd={handleDragEnd}>
-        <DraggableItemsList items={albums} />
+        <DraggableItemsList
+          items={albums}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+        />
       </DragDropContext>
     </div>
   );

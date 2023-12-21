@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 const COVER_IMAGE_URL = process.env.REACT_APP_COVER_IMAGE_URL;
 
 export const Item = ({artistName, title, albumTitle, albumCover, album}) => {
-  const coverUrl = `${COVER_IMAGE_URL}${albumCover}`;
+  const coverUrl = `${COVER_IMAGE_URL}/${albumCover}`;
   return (
     <ListItem
       alignItems="flex-start"

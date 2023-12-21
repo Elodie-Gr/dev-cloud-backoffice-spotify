@@ -1,5 +1,7 @@
 // services/api/importApi.js
 import axios from 'axios';
+const apiUrl =
+  process.env.REACT_APP_API_BASE_URL || 'http://localhost:4000/api/v1';
 
 /**
  * Import a file.
@@ -17,16 +19,12 @@ export const importFile = async file => {
       .find(row => row.startsWith('authToken='));
     const authToken = authTokenCookie ? authTokenCookie.split('=')[1] : null;
 
-    const response = await axios.post(
-      'http://localhost:4000/api/v1/song',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: authToken ? authToken : '',
-        },
+    const response = await axios.post(`${apiUrl}/song`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: authToken ? authToken : '',
       },
-    );
+    });
 
     return response.data;
   } catch (error) {
