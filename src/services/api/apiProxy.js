@@ -17,7 +17,7 @@ export const post = (url, data, options = {}) => {
     .find(row => row.startsWith('authToken='));
   const authToken = authTokenCookie ? authTokenCookie.split('=')[1] : null;
 
-  return fetch(BASE_URL + url, {
+  return fetch(new URL(url, BASE_URL), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
