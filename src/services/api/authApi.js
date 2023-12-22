@@ -18,4 +18,4 @@ import {post} from './apiProxy';
  * @param {LoginRequest} credentials - The user's login credentials.
  * @returns {Promise<LoginResponse>} - A Promise resolving to the server response.
  */
-export const login = credentials => post('user/login', credentials);
+export const login = credentials => post('/user/login', credentials);
