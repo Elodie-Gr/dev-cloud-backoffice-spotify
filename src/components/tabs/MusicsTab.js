@@ -30,8 +30,9 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const MusicsTab = () => {
   const [songs, setSongs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const [openDropzoneModal, setOpenDropzoneModal] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
 
@@ -79,6 +80,7 @@ const MusicsTab = () => {
     }
     setUploadSuccess(false);
     setUploadError(false);
+    setDeleted(false);
   };
 
   const handlePageChange = page => {
@@ -89,6 +91,7 @@ const MusicsTab = () => {
     try {
       const updatedSongs = await fetchSongs();
       setSongs(updatedSongs);
+      setDeleted(true);
     } catch (error) {
       console.error('Error fetching updated songs:', error);
     }
@@ -118,6 +121,17 @@ const MusicsTab = () => {
         onDelete={handleDelete}
       />
 
+      <Snackbar
+        open={deleted}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}>
+        <Alert
+          onClose={handleAlertClose}
+          severity="success"
+          sx={{width: '100%'}}>
+          Song deleted successfully.
+        </Alert>
+      </Snackbar>
       <Snackbar
         open={uploadSuccess}
         autoHideDuration={6000}

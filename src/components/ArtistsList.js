@@ -5,7 +5,13 @@ import Divider from '@mui/material/Divider';
 import Pagination from '@mui/material/Pagination';
 import {Item} from './ArtistItem';
 
-export const ItemsList = ({items, currentPage, onPageChange, itemsPerPage}) => {
+export const ItemsList = ({
+  items,
+  currentPage,
+  onPageChange,
+  itemsPerPage,
+  onDelete,
+}) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedItems = items.slice(startIndex, endIndex);
@@ -16,7 +22,7 @@ export const ItemsList = ({items, currentPage, onPageChange, itemsPerPage}) => {
       <List sx={{width: '100%', minWidth: 800, bgcolor: 'background.paper'}}>
         {displayedItems.map((item, index) => (
           <React.Fragment key={index}>
-            <Item {...item} />
+            <Item {...item} onDelete={onDelete} />
             {index < displayedItems.length - 1 && (
               <Divider variant="inset" component="li" />
             )}

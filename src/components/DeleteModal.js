@@ -24,7 +24,7 @@ const DeleteModal = ({open, onClose, onConfirmDelete}) => {
       aria-labelledby="delete-confirmation-modal"
       aria-describedby="delete-confirmation-description">
       <Box sx={style}>
-        <p>Do you really want to delete this song?</p>
+        <p>Do you really want to delete this item?</p>
         <Button onClick={onConfirmDelete} color="error" variant="contained">
           Delete
         </Button>

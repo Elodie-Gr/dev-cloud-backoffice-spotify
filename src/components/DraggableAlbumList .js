@@ -9,6 +9,7 @@ export const DraggableItemsList = ({
   currentPage,
   onPageChange,
   itemsPerPage,
+  onDelete,
 }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -28,7 +29,12 @@ export const DraggableItemsList = ({
             {...provided.droppableProps}
             sx={{width: '100%', minWidth: 800, bgcolor: 'background.paper'}}>
             {displayedItems.map((item, index) => (
-              <DraggableItem key={item.albumCover} {...item} index={index} />
+              <DraggableItem
+                key={item.albumCover}
+                onDelete={onDelete}
+                {...item}
+                index={index}
+              />
             ))}
             {provided.placeholder}
           </List>
