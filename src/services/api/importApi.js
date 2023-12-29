@@ -5,30 +5,37 @@ const apiUrl =
 
 /**
  * Import a file.
- * @param {File} file - The file to be imported.
+ * @param {File[]} file - The file to be imported.
  * @returns {Promise} - A Promise resolving to the server response.
  */
 
-export const importFile = async file => {
+export const importFile = async files => {
   try {
     const formData = new FormData();
-    formData.append('audio', file);
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('audio', files[i]);
+    }
 
     const authTokenCookie = document.cookie
       .split('; ')
       .find(row => row.startsWith('authToken='));
     const authToken = authTokenCookie ? authTokenCookie.split('=')[1] : null;
 
-    const response = await axios.post(`${apiUrl}/song`, formData, {
+    const response = await fetch(`${apiUrl}/song`, {
+      method: 'POST',
+      body: formData,
       headers: {
-        'Content-Type': 'multipart/form-data',
         Authorization: authToken ? authToken : '',
       },
     });
 
-    return response.data;
+    if (response.ok) {
+      console.log('Files uploaded successfully');
+    } else {
+      console.error('Error uploading files');
+    }
   } catch (error) {
-    console.error('Error uploading song:', error.message);
-    throw error;
+    console.error('Error uploading files:', error);
   }
 };

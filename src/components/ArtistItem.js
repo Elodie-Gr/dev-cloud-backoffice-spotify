@@ -26,10 +26,8 @@ export const Item = ({name, albums, songs, _id, onDelete}) => {
       console.log('Artist deleted successfully!');
       onDelete();
       handleCloseDeleteModal();
-      // Optionally, you can refetch the songs after deletion
     } catch (error) {
       console.error('Error deleting artist:', error);
-      // Handle error, show alert, etc.
     }
   };
   return (

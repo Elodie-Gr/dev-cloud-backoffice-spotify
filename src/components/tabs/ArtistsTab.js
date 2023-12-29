@@ -2,6 +2,8 @@
 import React, {useState, useEffect} from 'react';
 import {ItemsList} from '../ArtistsList';
 import {fetchArtists} from '../../services/api/artistApi';
+import SearchBar from '../SearchBar';
+
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -11,6 +13,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const ArtistsTab = () => {
   const [artists, setArtists] = useState([]);
+  const [filteredArtists, setFilteredArtists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [deleted, setDeleted] = useState(false);
@@ -21,7 +24,6 @@ const ArtistsTab = () => {
       try {
         const artists = await fetchArtists();
         setArtists(artists);
-        console.log(artists);
       } catch (error) {
         console.error('Error fetching artists:', error);
       }
@@ -51,11 +53,20 @@ const ArtistsTab = () => {
     }
   };
 
+  const handleSearch = (results, query) => {
+    setCurrentPage(1);
+    setFilteredArtists(results);
+  };
+
   return (
     <div>
       <h2>Artistes</h2>
+      <div>
+        <SearchBar data={artists} onSearch={handleSearch} />
+      </div>
+
       <ItemsList
-        items={artists}
+        items={filteredArtists.length > 0 ? filteredArtists : artists}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}

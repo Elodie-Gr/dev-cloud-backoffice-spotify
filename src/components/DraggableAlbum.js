@@ -52,10 +52,8 @@ export const DraggableItem = ({
       console.log('Album deleted successfully!');
       onDelete();
       handleCloseDeleteModal();
-      // Optionally, you can refetch the songs after deletion
     } catch (error) {
       console.error('Error deleting album:', error);
-      // Handle error, show alert, etc.
     }
   };
   return (

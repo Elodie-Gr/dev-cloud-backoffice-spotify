@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import StyledButton from './Button';
-import SearchBar from './SearchBar';
 
 export default function SearchAppBar() {
   const navigate = useNavigate();
@@ -25,11 +24,7 @@ export default function SearchAppBar() {
             sx={{display: {xs: 'none', sm: 'block'}}}>
             SPOTIFY BACKOFFICE
           </Typography>
-          <Box sx={{flexGrow: 0.25}} />
-
-          <SearchBar />
           <Box sx={{flexGrow: 1}} />
-
           <Box sx={{display: {xs: 'none', md: 'flex'}}}>
             <StyledButton color="inherit" onClick={handleLogout}>
               SIGN OUT

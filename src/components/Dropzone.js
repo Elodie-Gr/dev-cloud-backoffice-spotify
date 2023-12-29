@@ -25,13 +25,13 @@ const Icon = styled(CloudUploadIcon)(({theme}) => ({
 }));
 
 const Dropzone = ({onDrop}) => {
-  const {getRootProps, getInputProps} = useDropzone({onDrop});
+  const {getRootProps, getInputProps} = useDropzone({onDrop, multiple: true});
 
   return (
     <StyledDropzone {...getRootProps()} elevation={3}>
       <input {...getInputProps()} />
       <Icon />
-      <p>Drop a file here or click in order to select a file</p>
+      <p>Drop 1 to 10 files here or click in order to select a file</p>
     </StyledDropzone>
   );
 };

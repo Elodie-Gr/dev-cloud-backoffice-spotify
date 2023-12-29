@@ -27,7 +27,6 @@ export const deleteArtist = async id => {
       .split('; ')
       .find(row => row.startsWith('authToken='));
     const authToken = authTokenCookie ? authTokenCookie.split('=')[1] : null;
-    console.log('artist id', id);
     const response = await fetch(`${BASE_URL}/artist/${id}`, {
       method: 'DELETE',
       headers: {

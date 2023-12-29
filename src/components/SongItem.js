@@ -38,10 +38,8 @@ export const Item = ({
       console.log('Song deleted successfully!');
       onDelete();
       handleCloseDeleteModal();
-      // Optionally, you can refetch the songs after deletion
     } catch (error) {
       console.error('Error deleting song:', error);
-      // Handle error, show alert, etc.
     }
   };
 

@@ -54,7 +54,6 @@ const AlbumsTab = () => {
       try {
         const albumsData = await fetchAlbums();
         setAlbums(albumsData);
-        console.log(albumsData);
       } catch (error) {
         console.error('Error fetching songs:', error);
       }

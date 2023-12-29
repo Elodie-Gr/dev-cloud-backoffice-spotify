@@ -2,6 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import {ItemsList} from '../SongsList';
 import Dropzone from '../Dropzone';
+import SearchBar from '../SearchBar';
 import {importFile} from '../../services/api/importApi';
 import {fetchSongs} from '../../services/api/songApi';
 
@@ -29,6 +30,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const MusicsTab = () => {
   const [songs, setSongs] = useState([]);
+  const [filteredSongs, setFilteredSongs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [openDropzoneModal, setOpenDropzoneModal] = useState(false);
@@ -36,33 +38,16 @@ const MusicsTab = () => {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
 
-  useEffect(() => {
-    // Fetch songs when the component mounts
-    const fetchData = async () => {
-      try {
-        const songsData = await fetchSongs();
-        setSongs(songsData);
-        console.log(songsData);
-      } catch (error) {
-        console.error('Error fetching songs:', error);
-      }
-    };
-
-    fetchData();
-  }, [uploadSuccess]);
-
   const handleDrop = async acceptedFiles => {
     try {
       console.log('Fichiers acceptés :', acceptedFiles);
-      const file = acceptedFiles[0];
-      const response = await importFile(file);
+      await importFile(acceptedFiles); // Use the updated function
       setOpenDropzoneModal(false);
       setUploadSuccess(true);
-      console.log(response); // ADD AN ALERT
     } catch (error) {
       setOpenDropzoneModal(false);
       setUploadError(true);
-      console.error('Error importing file:', error);
+      console.error('Error importing files:', error);
     }
   };
 
@@ -97,11 +82,31 @@ const MusicsTab = () => {
     }
   };
 
+  const handleSearch = (results, query) => {
+    setCurrentPage(1);
+    setFilteredSongs(results);
+  };
+
+  useEffect(() => {
+    // Fetch songs when the component mounts
+    const fetchData = async () => {
+      try {
+        const songsData = await fetchSongs();
+        setSongs(songsData);
+      } catch (error) {
+        console.error('Error fetching songs:', error);
+      }
+    };
+
+    fetchData();
+  }, [uploadSuccess]);
+
   return (
     <div>
       <h2>Musiques</h2>
       <div>
         <Button onClick={handleOpenDropzoneModal}>IMPORT</Button>
+        <SearchBar data={songs} onSearch={handleSearch} />
         <Modal
           open={openDropzoneModal}
           onClose={handleCloseDropzoneModal}
@@ -114,7 +119,7 @@ const MusicsTab = () => {
       </div>
 
       <ItemsList
-        items={songs}
+        items={filteredSongs.length > 0 ? filteredSongs : songs}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
