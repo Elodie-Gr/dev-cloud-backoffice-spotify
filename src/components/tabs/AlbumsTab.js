@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {DragDropContext} from 'react-beautiful-dnd';
 import {DraggableItemsList} from '../DraggableAlbumList ';
 import {fetchAlbums} from '../../services/api/albumApi';
+import SearchBar from '../SearchBar';
+
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -11,6 +13,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const AlbumsTab = () => {
   const [albums, setAlbums] = React.useState([]);
+  const [filteredAlbums, setFilteredAlbums] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [deleted, setDeleted] = useState(false);
@@ -48,6 +51,11 @@ const AlbumsTab = () => {
     }
   };
 
+  const handleSearch = (results, query) => {
+    setCurrentPage(1);
+    setFilteredAlbums(results);
+  };
+
   useEffect(() => {
     // Fetch songs when the component mounts
     const fetchData = async () => {
@@ -65,9 +73,12 @@ const AlbumsTab = () => {
   return (
     <div>
       <h2>Albums</h2>
+      <div>
+        <SearchBar data={albums} onSearch={handleSearch} />
+      </div>
       <DragDropContext onDragEnd={handleDragEnd}>
         <DraggableItemsList
-          items={albums}
+          items={filteredAlbums.length > 0 ? filteredAlbums : albums}
           currentPage={currentPage}
           onPageChange={handlePageChange}
           itemsPerPage={itemsPerPage}
