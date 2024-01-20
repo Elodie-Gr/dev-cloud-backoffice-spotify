@@ -3,8 +3,13 @@ import React, {useState, useEffect} from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import {debounce} from 'lodash';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import {useTheme} from '@mui/material/styles';
 
 export default function SearchBar({data, onSearch}) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -45,7 +50,9 @@ export default function SearchBar({data, onSearch}) {
 
   return (
     <Autocomplete
-      sx={{width: '90vh'}}
+      sx={{
+        width: isSmallScreen ? '90vw' : '90vh', // Adjust width based on screen size
+      }}
       id="search-bar"
       options={searchResults.map(result => result.title || result.name)}
       onInputChange={(event, newInputValue) => setSearchQuery(newInputValue)}

@@ -23,7 +23,7 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}>
       {value === index && (
-        <Box sx={{p: 3}}>
+        <Box sx={{pt: 3}}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -61,9 +61,7 @@ export default function AdminTabs() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center', // Center horizontally
-        width: '100%', // Take full width
-        margin: 'auto', // Center horizontally
+        alignItems: 'center',
         bgcolor: 'background.paper',
       }}>
       <AppBar position="static">
@@ -73,7 +71,7 @@ export default function AdminTabs() {
           indicatorColor="secondary"
           textColor="inherit"
           variant="fullWidth"
-          aria-label="full width tabs example">
+          aria-label="admin tabs">
           <Tab label="Musiques" {...a11yProps(0)} />
           <Tab label="Artistes" {...a11yProps(1)} />
           <Tab label="Albums" {...a11yProps(2)} />

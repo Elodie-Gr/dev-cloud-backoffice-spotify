@@ -1,6 +1,7 @@
 //Item.js
 import React, {useState} from 'react';
 import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
@@ -49,20 +50,14 @@ export const Item = ({name, albums, songs, _id, onDelete}) => {
         }>
         <Box sx={{display: 'flex', alignItems: 'center'}}>
           <Box sx={{ml: 1.5, minWidth: 0}}>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              fontWeight={500}>
-              {name}
-            </Typography>
-            <Typography>
-              <b>Albums:</b>
-            </Typography>
-            <ul>
+            <Typography color="#1ED760">{name}</Typography>
+            <List>
               {albums.map(album => (
-                <li key={album._id}>{album.title}</li>
+                <ListItem sx={{color: 'white'}} key={album._id}>
+                  {album.title}
+                </ListItem>
               ))}
-            </ul>
+            </List>
           </Box>
         </Box>
       </ListItem>

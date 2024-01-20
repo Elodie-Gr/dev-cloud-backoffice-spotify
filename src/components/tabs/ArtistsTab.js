@@ -4,7 +4,9 @@ import {ItemsList} from '../ArtistsList';
 import {fetchArtists} from '../../services/api/artistApi';
 import SearchBar from '../SearchBar';
 
+import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
+import Typography from '@mui/material/Typography';
 import MuiAlert from '@mui/material/Alert';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -24,6 +26,7 @@ const ArtistsTab = () => {
       try {
         const artists = await fetchArtists();
         setArtists(artists);
+        console.log('Artists fetched successfully:', artists);
       } catch (error) {
         console.error('Error fetching artists:', error);
       }
@@ -59,11 +62,13 @@ const ArtistsTab = () => {
   };
 
   return (
-    <div>
-      <h2>Artistes</h2>
-      <div>
+    <Box sx={{p: 2}}>
+      <Typography color="#FFF" variant="h5" sx={{mb: 2}}>
+        Artistes
+      </Typography>
+      <Box>
         <SearchBar data={artists} onSearch={handleSearch} />
-      </div>
+      </Box>
 
       <ItemsList
         items={filteredArtists.length > 0 ? filteredArtists : artists}
@@ -83,7 +88,7 @@ const ArtistsTab = () => {
           Artist deleted successfully.
         </Alert>
       </Snackbar>
-    </div>
+    </Box>
   );
 };
 

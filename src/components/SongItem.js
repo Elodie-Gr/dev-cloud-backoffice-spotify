@@ -11,15 +11,7 @@ import {deleteSong} from '../services/api/songApi';
 
 const COVER_IMAGE_URL = process.env.REACT_APP_COVER_IMAGE_URL;
 
-export const Item = ({
-  artistName,
-  title,
-  albumTitle,
-  albumCover,
-  album,
-  _id,
-  onDelete,
-}) => {
+export const Item = ({artist, title, albumCover, album, _id, onDelete}) => {
   const coverUrl = `${COVER_IMAGE_URL}/${albumCover}`;
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -62,22 +54,23 @@ export const Item = ({
         }>
         <img
           src={coverUrl}
-          alt={`${artistName} - ${title}`}
+          alt={`${artist.name} - ${title}`}
           style={{width: 64, height: 64, marginRight: 16}}
         />
         <Box sx={{display: 'flex', alignItems: 'center'}}>
           <Box sx={{ml: 1.5, minWidth: 0}}>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              fontWeight={500}>
-              {artistName}
+            <Typography variant="caption" color="white" fontWeight={500}>
+              {artist.name} test
             </Typography>
-            <Typography noWrap>
+            <Typography color="#1ED760" noWrap>
               <b>{title}</b>
             </Typography>
-            <Typography noWrap letterSpacing={-0.25}>
-              {albumTitle}
+            <Typography
+              variant="caption"
+              color="white"
+              noWrap
+              letterSpacing={-0.25}>
+              {album.title}
             </Typography>
           </Box>
         </Box>

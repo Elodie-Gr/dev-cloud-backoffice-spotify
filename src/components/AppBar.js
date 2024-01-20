@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 
-export default function SearchAppBar() {
+export default function SpotifyAppBar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -22,17 +22,13 @@ export default function SearchAppBar() {
             <Box sx={{display: {xs: 'block', md: 'none'}}}>
               <Avatar sx={{m: 1, bgcolor: 'secondary.main'}} src="./icon.png" />
             </Box>
-
             <Box sx={{display: {xs: 'none', md: 'block'}}}>
               <Typography variant="h6" noWrap>
                 SPOTIFY BACKOFFICE
               </Typography>
             </Box>
           </Box>
-
-          <Button color="inherit" onClick={handleLogout}>
-            SIGN OUT
-          </Button>
+          <Button onClick={handleLogout}>SIGN OUT</Button>
         </Toolbar>
       </AppBar>
     </Box>

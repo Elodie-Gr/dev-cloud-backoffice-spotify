@@ -19,7 +19,7 @@ export const ItemsList = ({
   return (
     <div
       style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-      <List sx={{width: '100%', minWidth: 800, bgcolor: 'background.paper'}}>
+      <List sx={{width: '100%', bgcolor: 'background.paper'}}>
         {displayedItems.map((item, index) => (
           <React.Fragment key={index}>
             <Item {...item} onDelete={onDelete} />

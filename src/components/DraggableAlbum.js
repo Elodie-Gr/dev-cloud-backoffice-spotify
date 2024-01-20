@@ -9,6 +9,8 @@ import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import DeleteModal from './DeleteModal';
 import {deleteAlbum} from '../services/api/albumApi';
+import EditModal from './EditModal';
+import {editAlbum} from '../services/api/albumApi';
 
 const CoverImage = styled('div')({
   width: 100,
@@ -37,12 +39,22 @@ export const DraggableItem = ({
 }) => {
   const coverUrl = `${COVER_IMAGE_URL}/${albumCover}`;
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const handleOpenDeleteModal = () => {
     setIsDeleteModalOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
     setIsDeleteModalOpen(false);
+  };
+
+  const handleOpenEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
   const handleConfirmDelete = async () => {
@@ -56,6 +68,20 @@ export const DraggableItem = ({
       console.error('Error deleting album:', error);
     }
   };
+
+  const handleEditAlbum = async formData => {
+    console.log('Editing album with data:', formData);
+    try {
+      await editAlbum(_id);
+
+      console.log('Album edited successfully!');
+      onDelete();
+      handleCloseEditModal();
+    } catch (error) {
+      console.error('Error editing album:', error);
+    }
+  };
+
   return (
     <>
       <Draggable draggableId={title} index={index}>
@@ -66,8 +92,8 @@ export const DraggableItem = ({
             {...provided.dragHandleProps}
             alignItems="flex-start"
             style={{
-              ...provided.draggableProps.style, // Use the provided styles
-              backgroundColor: snapshot.isDragging ? 'lightgreen' : 'pink', // Adjust background color based on dragging state
+              ...provided.draggableProps.style,
+              backgroundColor: snapshot.isDragging ? '#1ED760' : 'transparent',
               padding: '10px',
             }}
             secondaryAction={
@@ -109,6 +135,12 @@ export const DraggableItem = ({
         open={isDeleteModalOpen}
         onClose={handleCloseDeleteModal}
         onConfirmDelete={handleConfirmDelete}
+      />
+      <EditModal
+        open={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        onEdit={handleEditAlbum}
+        initialData={{title, releaseDate, albumCover}}
       />
     </>
   );

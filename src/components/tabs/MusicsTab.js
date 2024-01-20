@@ -8,16 +8,19 @@ import {fetchSongs} from '../../services/api/songApi';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Typography from '@mui/material/Typography';
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '90%',
+  maxWidth: 400,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -102,18 +105,26 @@ const MusicsTab = () => {
   }, [uploadSuccess]);
 
   return (
-    <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <h2>Musiques</h2>
-        <Button onClick={handleOpenDropzoneModal}>IMPORT</Button>
-      </div>
+    <Box sx={{p: 2}}>
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{mb: 2}}>
+        <Grid item xs={6} md="auto">
+          <Typography color="#FFF" variant="h5">
+            Musiques
+          </Typography>
+        </Grid>
+        <Grid item xs={false} md="auto">
+          <Button onClick={handleOpenDropzoneModal} variant="contained">
+            IMPORT
+          </Button>
+        </Grid>
+      </Grid>
 
-      <div>
+      <Box>
         <SearchBar data={songs} onSearch={handleSearch} />
         <Modal
           open={openDropzoneModal}
@@ -124,7 +135,7 @@ const MusicsTab = () => {
             <Dropzone onDrop={handleDrop} />
           </Box>
         </Modal>
-      </div>
+      </Box>
 
       <ItemsList
         items={filteredSongs.length > 0 ? filteredSongs : songs}
@@ -164,7 +175,7 @@ const MusicsTab = () => {
           Error uploading file.
         </Alert>
       </Snackbar>
-    </div>
+    </Box>
   );
 };
 

@@ -27,7 +27,7 @@ export const DraggableItemsList = ({
           <List
             ref={provided.innerRef}
             {...provided.droppableProps}
-            sx={{width: '100%', minWidth: 800, bgcolor: 'background.paper'}}>
+            sx={{width: '100%', bgcolor: 'background.paper'}}>
             {displayedItems.map((item, index) => (
               <DraggableItem
                 key={item.albumCover}
