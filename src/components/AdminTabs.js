@@ -44,7 +44,7 @@ function a11yProps(index) {
   };
 }
 
-export default function TabBar() {
+export default function AdminTabs() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 

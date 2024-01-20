@@ -45,7 +45,7 @@ export default function SearchBar({data, onSearch}) {
 
   return (
     <Autocomplete
-      sx={{width: '75vh'}}
+      sx={{width: '90vh'}}
       id="search-bar"
       options={searchResults.map(result => result.title || result.name)}
       onInputChange={(event, newInputValue) => setSearchQuery(newInputValue)}

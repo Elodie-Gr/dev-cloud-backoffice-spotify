@@ -7,11 +7,10 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {ThemeProvider} from '@mui/material/styles';
 import {login} from '../services/api/authApi';
 import {useNavigate} from 'react-router-dom';
-
-const defaultTheme = createTheme();
+import {defaultTheme} from '../config/theme';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -80,6 +79,7 @@ const Login = () => {
           </Typography>
           <Box component="form" onSubmit={handleLogin} noValidate sx={{mt: 1}}>
             <TextField
+              variant="standard"
               margin="normal"
               required
               fullWidth
@@ -98,6 +98,7 @@ const Login = () => {
               helperText={emailError}
             />
             <TextField
+              variant="standard"
               margin="normal"
               required
               fullWidth

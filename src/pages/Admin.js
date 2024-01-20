@@ -1,14 +1,18 @@
 // pages/Admin.js
 import React, {Suspense} from 'react';
-import TabBar from '../components/TabBar';
+import AdminTabs from '../components/AdminTabs';
 import SearchAppBar from '../components/AppBar';
+import {ThemeProvider} from '@mui/material/styles';
+import {defaultTheme} from '../config/theme';
 
 const Admin = () => {
   return (
-    <Suspense fallback={<div>Chargement...</div>}>
-      <SearchAppBar />
-      <TabBar />
-    </Suspense>
+    <ThemeProvider theme={defaultTheme}>
+      <Suspense fallback={<div>Chargement...</div>}>
+        <SearchAppBar />
+        <AdminTabs />
+      </Suspense>
+    </ThemeProvider>
   );
 };
 

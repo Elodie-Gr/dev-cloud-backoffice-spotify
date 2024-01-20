@@ -103,9 +103,17 @@ const MusicsTab = () => {
 
   return (
     <div>
-      <h2>Musiques</h2>
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <h2>Musiques</h2>
         <Button onClick={handleOpenDropzoneModal}>IMPORT</Button>
+      </div>
+
+      <div>
         <SearchBar data={songs} onSearch={handleSearch} />
         <Modal
           open={openDropzoneModal}
