@@ -17,6 +17,7 @@ const AlbumsTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [deleted, setDeleted] = useState(false);
+  const [edited, setEdited] = useState(false);
 
   const handleDragEnd = result => {
     if (!result.destination) {
@@ -46,6 +47,16 @@ const AlbumsTab = () => {
       const updatedAlbums = await fetchAlbums();
       setAlbums(updatedAlbums);
       setDeleted(true);
+    } catch (error) {
+      console.error('Error fetching updated songs:', error);
+    }
+  };
+
+  const handleEdit = async () => {
+    try {
+      const updatedAlbums = await fetchAlbums();
+      setAlbums(updatedAlbums);
+      setEdited(true);
     } catch (error) {
       console.error('Error fetching updated songs:', error);
     }
@@ -83,6 +94,7 @@ const AlbumsTab = () => {
           onPageChange={handlePageChange}
           itemsPerPage={itemsPerPage}
           onDelete={handleDelete}
+          onEdit={handleEdit}
         />
       </DragDropContext>
       <Snackbar

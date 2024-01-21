@@ -7,20 +7,39 @@ import CreateIcon from '@mui/icons-material/Create';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import DeleteModal from './DeleteModal';
-import {deleteSong} from '../services/api/songApi';
+import {deleteSong, editSong} from '../services/api/songApi';
+import EditSongModal from './EditSongModal';
 
 const COVER_IMAGE_URL = process.env.REACT_APP_COVER_IMAGE_URL;
 
-export const Item = ({artist, title, albumCover, album, _id, onDelete}) => {
+export const Item = ({
+  artist,
+  title,
+  albumCover,
+  album,
+  _id,
+  onDelete,
+  onEdit,
+}) => {
   const coverUrl = `${COVER_IMAGE_URL}/${albumCover}`;
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const handleOpenDeleteModal = () => {
     setIsDeleteModalOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
     setIsDeleteModalOpen(false);
+  };
+
+  const handleOpenEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
   const handleConfirmDelete = async () => {
@@ -35,13 +54,29 @@ export const Item = ({artist, title, albumCover, album, _id, onDelete}) => {
     }
   };
 
+  const handleEditSong = async formData => {
+    console.log('Editing Song with data:', formData);
+    try {
+      await editSong(_id, formData);
+      console.log('Song edited successfully!');
+      onEdit();
+      handleCloseEditModal();
+    } catch (error) {
+      console.error('Error editing song:', error);
+    }
+  };
+
   return (
     <>
       <ListItem
         alignItems="flex-start"
         secondaryAction={
           <React.Fragment>
-            <IconButton edge="end" aria-label="create" style={{margin: 2}}>
+            <IconButton
+              edge="end"
+              aria-label="create"
+              style={{margin: 2}}
+              onClick={handleOpenEditModal}>
               <CreateIcon />
             </IconButton>
             <IconButton
@@ -60,7 +95,7 @@ export const Item = ({artist, title, albumCover, album, _id, onDelete}) => {
         <Box sx={{display: 'flex', alignItems: 'center'}}>
           <Box sx={{ml: 1.5, minWidth: 0}}>
             <Typography variant="caption" color="white" fontWeight={500}>
-              {artist.name} test
+              {artist.name}
             </Typography>
             <Typography color="#1ED760" noWrap>
               <b>{title}</b>
@@ -79,6 +114,12 @@ export const Item = ({artist, title, albumCover, album, _id, onDelete}) => {
         open={isDeleteModalOpen}
         onClose={handleCloseDeleteModal}
         onConfirmDelete={handleConfirmDelete}
+      />
+      <EditSongModal
+        open={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        onEdit={handleEditSong}
+        initialData={{title}}
       />
     </>
   );

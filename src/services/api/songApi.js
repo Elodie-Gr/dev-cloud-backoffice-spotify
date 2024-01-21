@@ -33,3 +33,28 @@ export const deleteSong = async id => {
     throw error;
   }
 };
+
+export const editSong = async (id, songData) => {
+  try {
+    const authTokenCookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('authToken='));
+    const authToken = authTokenCookie ? authTokenCookie.split('=')[1] : null;
+
+    const formData = new URLSearchParams();
+    formData.append('title', songData.title);
+
+    const response = await fetch(`${BASE_URL}/song/${id}`, {
+      method: 'PUT',
+      body: formData,
+      headers: {
+        Authorization: authToken ? authToken : '',
+      },
+    });
+
+    return handleResponse(response);
+  } catch (error) {
+    console.error('Error editing artist:', error);
+    throw error;
+  }
+};

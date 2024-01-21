@@ -42,3 +42,28 @@ export const deleteArtist = async id => {
     throw error;
   }
 };
+
+export const editArtist = async (id, artistData) => {
+  try {
+    const authTokenCookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('authToken='));
+    const authToken = authTokenCookie ? authTokenCookie.split('=')[1] : null;
+
+    const formData = new URLSearchParams();
+    formData.append('name', artistData.name);
+
+    const response = await fetch(`${BASE_URL}/artist/${id}`, {
+      method: 'PUT',
+      body: formData,
+      headers: {
+        Authorization: authToken ? authToken : '',
+      },
+    });
+
+    return handleResponse(response);
+  } catch (error) {
+    console.error('Error editing artist:', error);
+    throw error;
+  }
+};

@@ -9,7 +9,7 @@ import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import DeleteModal from './DeleteModal';
 import {deleteAlbum} from '../services/api/albumApi';
-import EditModal from './EditModal';
+import EditAlbumModal from './EditAlbumModal';
 import {editAlbum} from '../services/api/albumApi';
 
 const CoverImage = styled('div')({
@@ -31,11 +31,12 @@ export const DraggableItem = ({
   artist,
   songs,
   title,
-  releaseDate,
+  date,
   albumCover,
   index,
   _id,
   onDelete,
+  onEdit,
 }) => {
   const coverUrl = `${COVER_IMAGE_URL}/${albumCover}`;
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -72,10 +73,9 @@ export const DraggableItem = ({
   const handleEditAlbum = async formData => {
     console.log('Editing album with data:', formData);
     try {
-      await editAlbum(_id);
-
+      await editAlbum(_id, formData);
       console.log('Album edited successfully!');
-      onDelete();
+      onEdit();
       handleCloseEditModal();
     } catch (error) {
       console.error('Error editing album:', error);
@@ -98,7 +98,11 @@ export const DraggableItem = ({
             }}
             secondaryAction={
               <React.Fragment>
-                <IconButton edge="end" aria-label="create" style={{margin: 2}}>
+                <IconButton
+                  edge="end"
+                  aria-label="create"
+                  style={{margin: 2}}
+                  onClick={handleOpenEditModal}>
                   <CreateIcon />
                 </IconButton>
                 <IconButton
@@ -126,6 +130,13 @@ export const DraggableItem = ({
                 <Typography noWrap letterSpacing={-0.25}>
                   {title}
                 </Typography>
+                <Typography
+                  fontWeight={500}
+                  noWrap
+                  variant="caption"
+                  color="text.secondary">
+                  {date}
+                </Typography>
               </Box>
             </Box>
           </ListItem>
@@ -136,11 +147,11 @@ export const DraggableItem = ({
         onClose={handleCloseDeleteModal}
         onConfirmDelete={handleConfirmDelete}
       />
-      <EditModal
+      <EditAlbumModal
         open={isEditModalOpen}
         onClose={handleCloseEditModal}
         onEdit={handleEditAlbum}
-        initialData={{title, releaseDate, albumCover}}
+        initialData={{title, date, albumCover}}
       />
     </>
   );

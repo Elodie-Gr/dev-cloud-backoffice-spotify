@@ -19,6 +19,7 @@ const ArtistsTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [deleted, setDeleted] = useState(false);
+  const [edited, setEdited] = useState(false);
 
   useEffect(() => {
     // Fetch songs when the component mounts
@@ -56,6 +57,16 @@ const ArtistsTab = () => {
     }
   };
 
+  const handleEdit = async () => {
+    try {
+      const updatedArtists = await fetchArtists();
+      setArtists(updatedArtists);
+      setEdited(true);
+    } catch (error) {
+      console.error('Error fetching updated songs:', error);
+    }
+  };
+
   const handleSearch = (results, query) => {
     setCurrentPage(1);
     setFilteredArtists(results);
@@ -76,6 +87,7 @@ const ArtistsTab = () => {
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
         onDelete={handleDelete}
+        onEdit={handleEdit}
       />
       <Snackbar
         open={deleted}

@@ -11,6 +11,7 @@ export const ItemsList = ({
   onPageChange,
   itemsPerPage,
   onDelete,
+  onEdit,
 }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -22,7 +23,7 @@ export const ItemsList = ({
       <List sx={{width: '100%', bgcolor: 'background.paper'}}>
         {displayedItems.map((item, index) => (
           <React.Fragment key={index}>
-            <Item {...item} onDelete={onDelete} />
+            <Item {...item} onDelete={onDelete} onEdit={onEdit} />
             {index < displayedItems.length - 1 && (
               <Divider variant="inset" component="li" />
             )}

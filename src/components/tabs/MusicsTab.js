@@ -38,6 +38,7 @@ const MusicsTab = () => {
   const itemsPerPage = 10;
   const [openDropzoneModal, setOpenDropzoneModal] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [edited, setEdited] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
 
@@ -80,6 +81,16 @@ const MusicsTab = () => {
       const updatedSongs = await fetchSongs();
       setSongs(updatedSongs);
       setDeleted(true);
+    } catch (error) {
+      console.error('Error fetching updated songs:', error);
+    }
+  };
+
+  const handleEdit = async () => {
+    try {
+      const updatedSongs = await fetchSongs();
+      setSongs(updatedSongs);
+      setEdited(true);
     } catch (error) {
       console.error('Error fetching updated songs:', error);
     }
@@ -143,6 +154,7 @@ const MusicsTab = () => {
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
         onDelete={handleDelete}
+        onEdit={handleEdit}
       />
 
       <Snackbar

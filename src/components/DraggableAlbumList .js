@@ -10,6 +10,7 @@ export const DraggableItemsList = ({
   onPageChange,
   itemsPerPage,
   onDelete,
+  onEdit,
 }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -32,6 +33,7 @@ export const DraggableItemsList = ({
               <DraggableItem
                 key={item.albumCover}
                 onDelete={onDelete}
+                onEdit={onEdit}
                 {...item}
                 index={index}
               />

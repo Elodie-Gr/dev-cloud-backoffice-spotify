@@ -1,4 +1,4 @@
-//Item.js
+//ArtistItem.js
 import React, {useState} from 'react';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
@@ -8,16 +8,27 @@ import CreateIcon from '@mui/icons-material/Create';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import DeleteModal from './DeleteModal';
-import {deleteArtist} from '../services/api/artistApi';
+import {deleteArtist, editArtist} from '../services/api/artistApi';
+import EditArtistModal from './EditArtistModal';
 
-export const Item = ({name, albums, songs, _id, onDelete}) => {
+export const Item = ({name, albums, songs, _id, onDelete, onEdit}) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const handleOpenDeleteModal = () => {
     setIsDeleteModalOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
     setIsDeleteModalOpen(false);
+  };
+
+  const handleOpenEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
   const handleConfirmDelete = async () => {
@@ -31,13 +42,30 @@ export const Item = ({name, albums, songs, _id, onDelete}) => {
       console.error('Error deleting artist:', error);
     }
   };
+
+  const handleEditArtist = async formData => {
+    console.log('Editing Artist  with data:', formData);
+    try {
+      await editArtist(_id, formData);
+      console.log('Artist edited successfully!');
+      onEdit();
+      handleCloseEditModal();
+    } catch (error) {
+      console.error('Error editing artist:', error);
+    }
+  };
+
   return (
     <>
       <ListItem
         alignItems="flex-start"
         secondaryAction={
           <React.Fragment>
-            <IconButton edge="end" aria-label="create" style={{margin: 2}}>
+            <IconButton
+              edge="end"
+              aria-label="create"
+              style={{margin: 2}}
+              onClick={handleOpenEditModal}>
               <CreateIcon />
             </IconButton>
             <IconButton
@@ -65,6 +93,12 @@ export const Item = ({name, albums, songs, _id, onDelete}) => {
         open={isDeleteModalOpen}
         onClose={handleCloseDeleteModal}
         onConfirmDelete={handleConfirmDelete}
+      />
+      <EditArtistModal
+        open={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        onEdit={handleEditArtist}
+        initialData={{name}}
       />
     </>
   );
