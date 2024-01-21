@@ -11,6 +11,16 @@ export const fetchAlbums = async () => {
   }
 };
 
+export const countAlbums = async () => {
+  try {
+    const response = await get('/album/album-count');
+    return response;
+  } catch (error) {
+    console.error('Error counting songs:', error);
+    throw error;
+  }
+};
+
 export const fetchAlbumById = async albumId => {
   try {
     const response = await get(`/album/${albumId}`);

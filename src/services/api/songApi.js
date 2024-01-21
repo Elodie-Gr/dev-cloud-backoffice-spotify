@@ -11,6 +11,26 @@ export const fetchSongs = async () => {
   }
 };
 
+export const countSongs = async () => {
+  try {
+    const response = await get('/song/song-count');
+    return response;
+  } catch (error) {
+    console.error('Error counting songs:', error);
+    throw error;
+  }
+};
+
+export const countTotalListens = async () => {
+  try {
+    const response = await get('/song/total-listens');
+    return response;
+  } catch (error) {
+    console.error('Error counting songs:', error);
+    throw error;
+  }
+};
+
 export const deleteSong = async id => {
   try {
     const authTokenCookie = document.cookie
