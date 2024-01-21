@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Box, Button, Input, FormControl} from '@mui/material';
 import YearPicker from './YearPicker';
 
@@ -10,7 +10,8 @@ const EditAlbumForm = ({album, onClose, onEdit}) => {
   });
 
   const handleInputChange = (name, value) => {
-    setFormData(prevData => ({...prevData, [name]: value.toString()}));
+    setFormData(prevData => ({...prevData, [name]: value}));
+    console.log('formData:', formData);
   };
 
   const handleImageChange = e => {
@@ -28,6 +29,10 @@ const EditAlbumForm = ({album, onClose, onEdit}) => {
     onClose();
   };
 
+  useEffect(() => {
+    console.log('formData:', formData);
+  }, [formData]);
+
   return (
     <Box
       component="form"
@@ -38,8 +43,7 @@ const EditAlbumForm = ({album, onClose, onEdit}) => {
           id="title"
           name="title"
           value={formData.title}
-          onChange={handleInputChange}
-          required
+          onChange={e => handleInputChange('title', e.target.value)}
         />
       </FormControl>
       <br />

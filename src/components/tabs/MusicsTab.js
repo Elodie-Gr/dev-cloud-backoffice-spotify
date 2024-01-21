@@ -42,6 +42,19 @@ const MusicsTab = () => {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadError, setUploadError] = useState(false);
 
+  useEffect(() => {
+    // Fetch songs when the component mounts
+    const fetchData = async () => {
+      try {
+        const songsData = await fetchSongs();
+        setSongs(songsData);
+      } catch (error) {
+        console.error('Error fetching songs:', error);
+      }
+    };
+    fetchData();
+  }, [uploadSuccess]);
+
   const handleDrop = async acceptedFiles => {
     try {
       console.log('Fichiers acceptés :', acceptedFiles);
@@ -101,20 +114,6 @@ const MusicsTab = () => {
     setFilteredSongs(results);
   };
 
-  useEffect(() => {
-    // Fetch songs when the component mounts
-    const fetchData = async () => {
-      try {
-        const songsData = await fetchSongs();
-        setSongs(songsData);
-      } catch (error) {
-        console.error('Error fetching songs:', error);
-      }
-    };
-
-    fetchData();
-  }, [uploadSuccess]);
-
   return (
     <Box sx={{p: 2}}>
       <Grid
@@ -166,17 +165,6 @@ const MusicsTab = () => {
           severity="success"
           sx={{width: '100%'}}>
           Song deleted successfully.
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={edited}
-        autoHideDuration={6000}
-        onClose={handleAlertClose}>
-        <Alert
-          onClose={handleAlertClose}
-          severity="success"
-          sx={{width: '100%'}}>
-          Song edited successfully.
         </Alert>
       </Snackbar>
       <Snackbar
