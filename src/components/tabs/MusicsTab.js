@@ -169,6 +169,17 @@ const MusicsTab = () => {
         </Alert>
       </Snackbar>
       <Snackbar
+        open={edited}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}>
+        <Alert
+          onClose={handleAlertClose}
+          severity="success"
+          sx={{width: '100%'}}>
+          Song edited successfully.
+        </Alert>
+      </Snackbar>
+      <Snackbar
         open={uploadSuccess}
         autoHideDuration={6000}
         onClose={handleAlertClose}>

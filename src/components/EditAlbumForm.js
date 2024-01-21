@@ -11,12 +11,11 @@ const EditAlbumForm = ({album, onClose, onEdit}) => {
 
   const handleInputChange = (name, value) => {
     setFormData(prevData => ({...prevData, [name]: value.toString()}));
-    console.log('formData:', formData);
   };
 
   const handleImageChange = e => {
     const file = e.target.files[0];
-    setFormData(prevData => ({...prevData, image: file}));
+    setFormData(prevData => ({...prevData, albumCover: file}));
   };
 
   const handleSubmit = e => {

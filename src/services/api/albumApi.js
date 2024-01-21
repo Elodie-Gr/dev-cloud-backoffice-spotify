@@ -58,6 +58,9 @@ export const editAlbum = async (id, albumData) => {
       formData.append(key, value);
     });
 
+    console.log('Album data before:', albumData);
+    console.log('FormData before:', formData);
+
     const response = await fetch(`${BASE_URL}/album/${id}`, {
       method: 'PUT',
       headers: {
@@ -67,37 +70,9 @@ export const editAlbum = async (id, albumData) => {
       body: formData,
     });
 
-    console.log('Album data:', albumData);
-    console.log('Edit album response:', response);
     return handleResponse(response);
   } catch (error) {
     console.error(`Error editing album with ID ${id}:`, error);
     throw error;
   }
 };
-
-/* export const editAlbum = async (id, albumData) => {
-  try {
-    const authTokenCookie = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('authToken='));
-    const authToken = authTokenCookie ? authTokenCookie.split('=')[1] : null;
-
-    const response = await fetch(`${BASE_URL}/album/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: authToken ? authToken : '',
-      },
-      credentials: 'include',
-      body: JSON.stringify(albumData),
-    });
-
-    console.log('Album data:', albumData);
-    console.log('Edit album response:', response);
-    return handleResponse(response);
-  } catch (error) {
-    console.error(`Error editing album with ID ${id}:`, error);
-    throw error;
-  }
-}; */
